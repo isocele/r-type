@@ -1,0 +1,3 @@
+/home/chollet/epitech/cpp/clone/CPP_rtype_2018/server/build/CMakeFiles/rebuild_cache.dir
+/home/chollet/epitech/cpp/clone/CPP_rtype_2018/server/build/CMakeFiles/r-type_server.dir
+/home/chollet/epitech/cpp/clone/CPP_rtype_2018/server/build/CMakeFiles/edit_cache.dir
