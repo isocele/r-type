@@ -1,4 +1,4 @@
-# Project r-type from Epitech 3rd grade
+# R-type from Epitech 3rd grade
 
 # How to play
 
