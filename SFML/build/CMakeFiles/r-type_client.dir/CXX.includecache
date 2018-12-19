@@ -51,6 +51,8 @@ Animation.hpp
 ../Include/Controls.hpp
 SFML/Graphics.hpp
 -
+Sound.hpp
+../Include/Sound.hpp
 
 ../Include/Graphics.hpp
 SFML/Graphics.hpp

@@ -1,6 +1,8 @@
 project(r-type)
 cmake_minimum_required(VERSION 3.10)
 add_definitions("-fPIC")
+add_definitions("-O2")
+add_definitions("-O3")
 
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -std=c++11")

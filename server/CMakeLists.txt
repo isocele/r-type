@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(cpp_rtype_2018)
+add_definitions("-O2")
+add_definitions("-O3")
 
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 	if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -9,7 +11,6 @@ if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 set(CMAKE_CXX_STANDARD 14)
-add_definitions("-g3")
 
 ## set compiler flags depending on OS and compiler
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
@@ -62,6 +63,7 @@ add_executable(r-type_server
 	include/CombatComponent.hpp
 	include/GraphicalComponent.hpp
 	include/PositionComponent.hpp
+	include/ScoreComponent.hpp
 	include/MoveSystem.hpp
 	include/FightSystem.hpp
 	src/Main.cpp
@@ -76,9 +78,9 @@ add_executable(r-type_server
 	src/CombatComponent.cpp
 	src/GraphicalComponent.cpp
 	src/PositionComponent.cpp
+	src/ScoreComponent.cpp
 	src/MoveSystem.cpp
 	src/FightSystem.cpp
-	src/ImplementEngineUpdate.cpp
 	)
 
 ## target build libs

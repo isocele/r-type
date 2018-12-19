@@ -20,13 +20,14 @@ class Graphics {
 public:
 	Graphics();
 	~Graphics();
-	int startDisplay(std::array<float, 250> &arr, int &size);
-	bool display(std::vector<std::vector<float>> compSent, Controls &controls);
-	int Launcher(SpriteCreator &creator, std::array<float, 250> &arr, int &size);
+	int startDisplay(std::array<float, 350> &arr, int &size);
+	bool display(std::vector<std::vector<float>> compSent, Controls &controls, Sound &sound, bool gameover);
+	int Launcher(SpriteCreator &creator, std::array<float, 350> &arr, int &size);
 	void getComponents(std::vector<std::vector<float>> compSent);
 	bool checkIfCompExist(spriteType type, int num, sf::Vector2f newPos);
 	void removeSomeComp(std::vector<std::vector<float>> compSent);
 	void close();
+	void printgameover();
 private:
        sf::RenderWindow window;
 			 sf::Event event;
@@ -34,6 +35,8 @@ private:
 			 SpriteCreator creator;
 			 Background background;
 			 std::vector<Component> components;
+			 bool gameoverinit = false;
+			 sf::Sprite gameover;
 };
 
 #endif /* GRAPHICS_HPP */

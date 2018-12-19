@@ -1533,6 +1533,24 @@ CMakeFiles/r-type_client.dir/Src/Component.cpp.o
  /home/chollet/epitech/cpp/clone/CPP_rtype_2018/SFML/Src/Component.cpp
 CMakeFiles/r-type_client.dir/Src/Controls.cpp.o
  ../Include/Controls.hpp
+ ../Include/Sound.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/AlResource.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Export.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/InputSoundFile.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Listener.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Music.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/OutputSoundFile.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Sound.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundBuffer.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundBufferRecorder.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileFactory.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileFactory.inl
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileReader.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileWriter.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundRecorder.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundSource.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundStream.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Config.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Graphics.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Graphics/BlendMode.hpp
@@ -1615,8 +1633,26 @@ CMakeFiles/r-type_client.dir/Src/Graphics.cpp.o
  ../Include/Controls.hpp
  ../Include/Graphics.hpp
  ../Include/MenuHandle.hpp
+ ../Include/Sound.hpp
  ../Include/SpriteCreator.hpp
  ../Include/SpriteType.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/AlResource.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Export.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/InputSoundFile.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Listener.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Music.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/OutputSoundFile.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/Sound.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundBuffer.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundBufferRecorder.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileFactory.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileFactory.inl
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileReader.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundFileWriter.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundRecorder.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundSource.hpp
+ /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Audio/SoundStream.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Config.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Graphics.hpp
  /home/chollet/.conan/data/sfml/2.5.1/bincrafters/stable/package/6f2577b5e9e3886787192316456fcdc0987a6f32/include/SFML/Graphics/BlendMode.hpp

@@ -3,6 +3,9 @@
 #include <iostream>
 #include <array>
 #include <stdlib.h>
+#include <mutex>
+#include <chrono>
+#include <ctime>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
@@ -15,7 +18,7 @@
 template<typename T>
 struct infos {
 	int size;
-	std::array<T, 250> _arr;
+	std::array<T, 350> _arr;
 };
 
 namespace Network {
@@ -57,12 +60,13 @@ namespace Network {
 		void handle_read_body(const boost::system::error_code &, size_t);
 		void add_users();
 		void analyse_header();
+		bool isRunning();
 
 		//game related functions
 		void launch_game(int &, int &);
 		void fillFloatcom();
 		void change_players_position(int &, int &);
-
+		void updateEngine();
 
 	private:
 
@@ -74,15 +78,24 @@ namespace Network {
 		std::vector<Client_ptr> users;
 		bool game_launched_ = false;
 		ecs::Engine _engine;
-		std::vector<ecs::Entity *> _players;
-		bool _missile;
+		std::mutex _mutex;
+		int _wave = 0;
 
 		//game related functions
-		int engineAction(int action, ecs::Entity &player, int id);
-		int movePlayer(int x, int y, ecs::Entity &player, int id);
-		int playerAttack(ecs::Entity &player);
+		int engineAction(int action, int n);
+		int movePlayer(int x, int y, int n);
+		int playerAttack(int n);
+		void spawnEnemies();
 		void initPlayer(int n);
+		void enemyWave1();
+		void enemyWave2();
+		void enemyWave3();
+		void enemyWave4();
+		void spawnBoss();
+		void newMonster(int x, int y, float speed);
+		void playerDead(int n);
 
+		std::chrono::system_clock::time_point _start = std::chrono::system_clock::now();
 	};
 
 	using Server_ptr = boost::shared_ptr<Server>;

@@ -13,17 +13,6 @@ ecs::Engine::Engine()
 }
 
 /*
-** implementUpdate depends on the game
-** the rest of the functions remain the
-** same no matter the Game
-*/
-
-void ecs::Engine::update()
-{
-	implementUpdate();
-}
-
-/*
 ** Entity Management
 **
 ** genID: generate and get ID when
@@ -32,21 +21,22 @@ void ecs::Engine::update()
 
 int ecs::Engine::genID()
 {
-	std::cout << _idCounter << std::endl;
 	return (_idCounter + 1);
 }
 
 ecs::Entity &ecs::Engine::newEntity()
 {
 	_idCounter++;
-	_entities.push_back(ecs::Entity(_idCounter, this, ecs::STATIC));
+	_entities.emplace_back(ecs::Entity(_idCounter, this, ecs::STATIC));
+	_idCounter += 1;
 	return (_entities.back());
 }
 
 ecs::Entity &ecs::Engine::newEntity(ecs::entityType type)
 {
 	_idCounter++;
-	_entities.push_back(ecs::Entity(_idCounter, this, type));
+	_entities.emplace_back(ecs::Entity(_idCounter, this, type));
+	_idCounter += 1;
 	return (_entities.back());
 }
 
@@ -57,6 +47,19 @@ ecs::Entity &ecs::Engine::addEntity(ecs::Entity &entity)
 	return (_entities.back());
 }
 
+bool ecs::Engine::killEntity(Entity &ent)
+{
+	auto it = _entities.begin();
+	while (it != _entities.end()) {
+		if (it->getID() == ent.getID()) {
+			_entities.erase(it);
+			return (true);
+		}
+		it += 1;
+	}
+	return (false);
+}
+
 bool ecs::Engine::killEntity(int id)
 {
 	auto it = _entities.begin();
@@ -65,9 +68,15 @@ bool ecs::Engine::killEntity(int id)
 			_entities.erase(it);
 			return (true);
 		}
+		it += 1;
 	}
 	std::cerr << "Entity not found" << '\n';
 	return (false);
+}
+
+std::vector<ecs::Entity> &ecs::Engine::getEntities()
+{
+	return _entities;
 }
 
 /*
@@ -93,7 +102,7 @@ ecs::System &ecs::Engine::getSystem(ecs::sysType sys)
 ecs::System &ecs::Engine::newSystem(ecs::sysType type)
 {
 	_sysCounter++;
-	_systems.push_back(ecs::System(type, this));
+	_systems.emplace_back(ecs::System(type, this));
 	return (_systems.back());
 }
 
@@ -102,7 +111,7 @@ ecs::System &ecs::Engine::newSystem(ecs::sysType type, System& sys)
 	_sysCounter++;
 	(void)(type);
 	//add check of pos here;
-	_systems.push_back(sys);
+	_systems.emplace_back(sys);
 	return (_systems.back());
 }
 

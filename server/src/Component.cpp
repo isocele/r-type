@@ -16,3 +16,8 @@ ecs::Component::Component(ecs::compType type)
 	: _type(type)
 {
 }
+
+ecs::compType ecs::Component::getType()
+{
+	return (_type);
+}

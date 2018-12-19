@@ -285,33 +285,6 @@ src/GraphicalComponent.cpp.s:
 	$(MAKE) -f CMakeFiles/r-type_server.dir/build.make CMakeFiles/r-type_server.dir/src/GraphicalComponent.cpp.s
 .PHONY : src/GraphicalComponent.cpp.s
 
-src/ImplementEngineUpdate.o: src/ImplementEngineUpdate.cpp.o
-
-.PHONY : src/ImplementEngineUpdate.o
-
-# target to build an object file
-src/ImplementEngineUpdate.cpp.o:
-	$(MAKE) -f CMakeFiles/r-type_server.dir/build.make CMakeFiles/r-type_server.dir/src/ImplementEngineUpdate.cpp.o
-.PHONY : src/ImplementEngineUpdate.cpp.o
-
-src/ImplementEngineUpdate.i: src/ImplementEngineUpdate.cpp.i
-
-.PHONY : src/ImplementEngineUpdate.i
-
-# target to preprocess a source file
-src/ImplementEngineUpdate.cpp.i:
-	$(MAKE) -f CMakeFiles/r-type_server.dir/build.make CMakeFiles/r-type_server.dir/src/ImplementEngineUpdate.cpp.i
-.PHONY : src/ImplementEngineUpdate.cpp.i
-
-src/ImplementEngineUpdate.s: src/ImplementEngineUpdate.cpp.s
-
-.PHONY : src/ImplementEngineUpdate.s
-
-# target to generate assembly for a file
-src/ImplementEngineUpdate.cpp.s:
-	$(MAKE) -f CMakeFiles/r-type_server.dir/build.make CMakeFiles/r-type_server.dir/src/ImplementEngineUpdate.cpp.s
-.PHONY : src/ImplementEngineUpdate.cpp.s
-
 src/Main.o: src/Main.cpp.o
 
 .PHONY : src/Main.o
@@ -555,9 +528,6 @@ help:
 	@echo "... src/GraphicalComponent.o"
 	@echo "... src/GraphicalComponent.i"
 	@echo "... src/GraphicalComponent.s"
-	@echo "... src/ImplementEngineUpdate.o"
-	@echo "... src/ImplementEngineUpdate.i"
-	@echo "... src/ImplementEngineUpdate.s"
 	@echo "... src/Main.o"
 	@echo "... src/Main.i"
 	@echo "... src/Main.s"

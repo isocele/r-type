@@ -1,0 +1,9 @@
+Type x y speed
+Enemy1
+1
+2
+10
+Enemy2
+2
+3
+10

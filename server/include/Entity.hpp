@@ -25,26 +25,37 @@ namespace ecs {
 
 	friend class System;
 	friend class Engine;
-	friend class MoveSystem;
 
 	public:
 
 		Entity(int id, ecs::Engine *parent, entityType type);
+
 		~Entity();
 		int getID();
+		int getIndex();
+		void setIndex(int n);
 		Engine *getParent();
 		ecs::entityType getType();
 		bool hasComponent(const ecs::compType);
 		Component *getComponent(const ecs::compType);
-		void updateComponent(ecs::compType, ecs::Component &);
-		void addComponent(ecs::compType, ecs::Component &);
+		void updateComponent(ecs::compType, ecs::Component*);
 		void removeComponent(ecs::compType);
 
-	//protected:
+		template <class T>
+		void addComponent(T *comp)
+		{
+			auto cpy = new T;
+			cpy = comp;
+			_components.push_back(dynamic_cast<ecs::Component *>(cpy));
+		}
+		void addComponent(ecs::Component *);
+
+	protected:
 
 		int _id;
+		int _index;
 		ecs::Engine *_parent;
-		std::map<const ecs::compType, ecs::Component *> _components;
+		std::vector<ecs::Component *> _components;
 		ecs::entityType _type;
 	};
 

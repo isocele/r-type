@@ -56,7 +56,7 @@ void Menu::initLobby(SpriteCreator &creator) {
 }
 
 int Menu::MenuManager(sf::RenderWindow &win, SpriteCreator &creator,
-		      std::array<float, 250> &arr, int &size) {
+		      std::array<float, 350> &arr, int &size) {
 
 	for (int i = 0; i < size; i++) {
 		_Player[i] = true;

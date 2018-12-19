@@ -27,13 +27,15 @@ void Controls::reset()
   left = false;
 }
 
-void Controls::checkControls()
+void Controls::checkControls(Sound &sound)
 {
   if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
     spacereleased = true;
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && spacereleased == true)  {
     spacereleased = false;
     space = true;
+    sound.stopTrack(SWPEW);
+    sound.launchTrack(SWPEW);
   }
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     up = true;

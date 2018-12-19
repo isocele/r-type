@@ -32,14 +32,13 @@ private:
   spriteType type;
   sf::Vector2f pos;
 	int num;
-	//Animation animation;
-	sf::Time timer = sf::milliseconds(100);
-	sf::Clock clock;
 	int spriteNb = 0;
 	int animNb = 0;
-	animType typeAnim = NONE;
+	animType typeAnim = EXPLO;
 	bool playAnim = false;
 	bool animState = true;
+	Animation move;
+	Animation dead;
 };
 
 #endif /* COMPONENT_HPP */

@@ -19,22 +19,28 @@ rtype::Move::Move(ecs::Engine *parent)
 
 int rtype::Move::run(ecs::Entity &entity)
 {
+	int ret = 0;
+
 	if (entity.hasComponent(ecs::POSITION) && entity.hasComponent(ecs::GRAPHICAL)) {
-		auto pos = new ecs::Position;
-		auto gr = new ecs::Graphical;
-		pos = dynamic_cast<ecs::Position *>(entity.getComponent(ecs::POSITION));
-		gr = dynamic_cast<ecs::Graphical *>(entity.getComponent(ecs::GRAPHICAL));
-		if (pos->isAutonomous() == false)
+		auto pos = dynamic_cast<ecs::Position *>(entity.getComponent(ecs::POSITION));
+		auto gr = dynamic_cast<ecs::Graphical *>(entity.getComponent(ecs::GRAPHICAL));
+		if (pos->isAutonomous() == false) {
+			std::cout << "no autonoumous movement\n";
 			return (1);
-
+		}
+		pos->setX(pos->getX() + pos->getSpeed());
 		// add monster movement AI;
-
 		gr->setSpritePos(pos->getPos());
-		entity.updateComponent(ecs::POSITION, *pos);
-		checkForCollisions(entity);
-		return (0);
+		ret = checkForCollisions(entity);
+		if (ret >= 0)
+			return ret;
+		if ((pos->getSpeed() > 0) && (pos->getX() > LENGTH))
+			_parent->killEntity(entity);
+		if ((pos->getSpeed() < 0) && (pos->getX() < -10))
+			_parent->killEntity(entity);
+		return 0;
 	}
-	return (-1);
+	return -1;
 }
 
 /*
@@ -44,18 +50,13 @@ int rtype::Move::run(ecs::Entity &entity)
 int rtype::Move::run(ecs::Entity &entity, ecs::Position &add)
 {
 	if (entity.hasComponent(ecs::POSITION) && entity.hasComponent(ecs::GRAPHICAL)) {
-		auto pos = new ecs::Position;
-		auto gr = new ecs::Graphical;
-		pos = dynamic_cast<ecs::Position *>(entity.getComponent(ecs::POSITION));
-		gr = dynamic_cast<ecs::Graphical *>(entity.getComponent(ecs::GRAPHICAL));
+		auto pos = dynamic_cast<ecs::Position *>(entity.getComponent(ecs::POSITION));
+		auto gr = dynamic_cast<ecs::Graphical *>(entity.getComponent(ecs::GRAPHICAL));
 		*pos += add;
 		gr->setSpritePos(pos->getPos());
-		entity.updateComponent(ecs::POSITION, *pos);
-		entity.updateComponent(ecs::GRAPHICAL, *gr);
-		checkForCollisions(entity);
-		return (0);
+		return (checkForCollisions(entity));
 	}
-	return (-1);
+	return -1;
 }
 
 /*
@@ -63,20 +64,20 @@ int rtype::Move::run(ecs::Entity &entity, ecs::Position &add)
 ** with other entities
 */
 
-bool rtype::Move::checkForCollisions(ecs::Entity &entity)
+int rtype::Move::checkForCollisions(ecs::Entity &entity)
 {
-	auto tmp = new ecs::Position;
 	auto pos = dynamic_cast<ecs::Position *>(entity.getComponent(ecs::POSITION));
+	int x = pos->getX();
+	int y = pos->getY();
 
-	std::vector<ecs::Entity> entities = entity._parent->_entities;
+	std::vector<ecs::Entity> entities = _parent->getEntities();
 	for (auto& ent : entities) {
-		tmp = dynamic_cast<ecs::Position *>(ent.getComponent(ecs::POSITION));
-		if (ent._id != entity._id && tmp != NULL) {
-			if (tmp == pos && collide(entity, ent) == true)
-				 return (isDead(entity));
+		auto tmp = dynamic_cast<ecs::Position *>(ent.getComponent(ecs::POSITION));
+		if (ent.getID() != entity.getID() && (abs(x - tmp->getX()) < 50 && abs(y - tmp->getY()) < 50)) {
+			return (collide(entity, ent));
 		}
 	}
-	return (false);
+	return (0);
 }
 
 /*
@@ -86,27 +87,52 @@ bool rtype::Move::checkForCollisions(ecs::Entity &entity)
 ** return false if collision had consequences
 */
 
-bool rtype::Move::collide(ecs::Entity &moved, ecs::Entity &hit)
+int rtype::Move::collide(ecs::Entity &moved, ecs::Entity &hit)
 {
-	if (moved._type == hit._type)
-		return (false);
-	if (moved._type == ecs::PLAYER && hit._type != ecs::P_MISSILE)
-		hitEntity(moved);
-	else if (hit._type == ecs::PLAYER && hit._type != ecs::P_MISSILE) {
-		hitEntity(moved);
-		isDead(hit);
-	} else if (moved._type == ecs::ENEMY && hit._type != ecs::E_MISSILE)
-		hitEntity(moved);
-	else if (hit._type == ecs::ENEMY && moved._type != ecs::E_MISSILE) {
-		hitEntity(moved);
-		isDead(hit);
-	} else if ((moved._type == ecs::P_MISSILE || moved._type == ecs::E_MISSILE) && hit._type == ecs::WALL)
-		hitEntity(moved);
-	else if ((moved._type == ecs::P_MISSILE || moved._type == ecs::E_MISSILE) && hit._type == ecs::STATIC) {
-		hitEntity(moved);
-		isDead(hit);
+	int ret = 0;
+	if (moved.getType() == hit.getType())
+		return ret;
+	else if (moved.getType() == ecs::PLAYER && hit.getType() == ecs::ENEMY) {
+		ret = moved.getIndex();
+		_parent->killEntity(moved);
+	} else if (moved.getType() == ecs::ENEMY && hit.getType() == ecs::PLAYER) {
+		ret = hit.getIndex();
+		_parent->killEntity(hit);
+	} else if (hit.getType() == ecs::ENEMY && moved.getType() == ecs::P_MISSILE) {
+		_parent->killEntity(hit);
+		_parent->killEntity(moved);
+	} else if (hit.getType() == ecs::P_MISSILE && moved.getType() == ecs::ENEMY) {
+		_parent->killEntity(hit);
+		_parent->killEntity(moved);
+	} else if (hit.getType() == ecs::E_MISSILE && moved.getType() == ecs::PLAYER) {
+		ret = moved.getIndex();
+		_parent->killEntity(hit);
+		_parent->killEntity(moved);
+	} else if (hit.getType() == ecs::PLAYER && moved.getType() == ecs::E_MISSILE) {
+		ret = hit.getIndex();
+		_parent->killEntity(hit);
+		_parent->killEntity(moved);
+	} else
+		return (-1);
+	return ret;
+}
+
+/*
+** addScore to all players when a friendly missile
+** hits an enemy or an enemy missile
+*/
+
+void rtype::Move::addScore(int val)
+{
+	auto entities = _parent->getEntities();
+
+	for (size_t i = 0; i < entities.size(); i++) {
+		if (entities[i].getType() == ecs::PLAYER &&
+		entities[i].hasComponent(ecs::SCORE)) {
+			auto score = dynamic_cast<ecs::Score *>(entities[i].getComponent(ecs::SCORE));
+			score += val;
+		}
 	}
-	return (true);
 }
 
 /*
@@ -116,14 +142,12 @@ bool rtype::Move::collide(ecs::Entity &moved, ecs::Entity &hit)
 
 void rtype::Move::hitEntity(ecs::Entity &hit)
 {
-	auto CombatStats = dynamic_cast<ecs::Combat *>(hit.getComponent(ecs::COMBAT));
-
-	if (CombatStats == NULL) {
+	if (!hit.hasComponent(ecs::COMBAT)) {
 		std::cerr << "Entity hit has no HP counter" << std::endl;
 		return ;
 	}
+	auto CombatStats = dynamic_cast<ecs::Combat *>(hit.getComponent(ecs::COMBAT));
 	CombatStats->takeAHit();
-	std::cout << "Entity " << hit._id << " took a hit !" << std::endl;
 }
 
 /*
@@ -134,13 +158,12 @@ void rtype::Move::hitEntity(ecs::Entity &hit)
 
 bool rtype::Move::isDead(ecs::Entity &hit)
 {
-	auto CombatStats = dynamic_cast<ecs::Combat *>(hit.getComponent(ecs::COMBAT));
-
-	if (CombatStats == NULL)
+	if (!hit.hasComponent(ecs::COMBAT))
 		return (false);
+	auto CombatStats = dynamic_cast<ecs::Combat *>(hit.getComponent(ecs::COMBAT));
 	if (CombatStats->getHp() == 0) {
-		std::cout << "Entity " << hit._id << " was destroyed / died !" << std::endl;
-		hit._parent->killEntity(hit._id);
+		std::cout << "Entity " << hit.getID() << " was destroyed / died !" << std::endl;
+		_parent->killEntity(hit);
 		return (true);
 	}
 	return (false);

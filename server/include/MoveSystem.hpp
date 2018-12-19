@@ -12,6 +12,7 @@
 #include "PositionComponent.hpp"
 #include "CombatComponent.hpp"
 #include "GraphicalComponent.hpp"
+#include "ScoreComponent.hpp"
 
 /*
 ** System managing the movements & collisions of entites
@@ -29,10 +30,11 @@ namespace rtype {
 
 	private:
 
-		bool checkForCollisions(ecs::Entity &entity);
-		bool collide(ecs::Entity &moved, ecs::Entity&hit);
+		int checkForCollisions(ecs::Entity &entity);
+		int collide(ecs::Entity &moved, ecs::Entity&hit);
 		void hitEntity(ecs::Entity &hit);
 		bool isDead(ecs::Entity &hit);
+		void addScore(int val);
 
 	};
 }

@@ -58,10 +58,11 @@ namespace ecs {
 	};
 
 	enum compType {
-		GRAPHICAL = 0,
-		POSITION = 1,
+		POSITION = 0,
+		GRAPHICAL = 1,
 		COMBAT = 2,
-		DEFAULT = 3
+		SCORE = 3,
+		DEFAULT = 4
 	};
 
 	enum spriteType {
@@ -78,5 +79,8 @@ namespace ecs {
 	};
 
 }
+
+#define LENGTH 1440 //1930
+#define HEIGHT 900 //1090
 
 #endif /* !COMPONENT_TYPES_H_ */

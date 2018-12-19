@@ -5,11 +5,12 @@
 ** ECS Entity
 */
 
+#include <stdexcept>
 #include "GameEngine.hpp"
 #include "Entity.hpp"
 
 ecs::Entity::Entity(int id, Engine *parent, entityType type)
-	: _id(id), _parent(parent), _type(type)
+	: _id(id), _index(0), _parent(parent), _type(type)
 {
 	if (_type == ecs::PLAYER)
 		std::cout << "player BORN" << std::endl;
@@ -26,6 +27,11 @@ int ecs::Entity::getID()
 	return (_id);
 }
 
+int ecs::Entity::getIndex()
+{
+	return (_index);
+}
+
 ecs::Engine *ecs::Entity::getParent()
 {
 	return (_parent);
@@ -36,16 +42,19 @@ ecs::entityType ecs::Entity::getType()
 	return _type;
 }
 
+void ecs::Entity::setIndex(int index)
+{
+	_index = index;
+}
+
 bool ecs::Entity::hasComponent(const ecs::compType type)
 {
-	auto search = _components.find(type);
-	if (search != _components.end()) {
-		//debug
-		//std::cout << "Entity " << _id << " has Component " << std::endl;
+	auto comp = _components.begin();
+	while (comp != _components.end() && (*comp)->getType() != type)
+		comp += 1;
+	if (comp != _components.end())
 		return (true);
-	}
-	//debug
-	std::cout << "Entity " << _id << ": Component not found" << std::endl;
+	std::cout << "Entity " << _id << ": Component " << (int)type << " not found" << std::endl;
  	return (false);
 }
 
@@ -55,32 +64,36 @@ bool ecs::Entity::hasComponent(const ecs::compType type)
 
 ecs::Component *ecs::Entity::getComponent(const ecs::compType type)
 {
-	auto search = _components.find(type);
-	if (search == _components.end()) {
-		std::cout << _parent->_entities.size() << " entities\n";
-		std::cout << "we are in entity " << _id << " \n";
-		std::cerr << "no such component" << std::endl;
-		return (NULL);
-	}
-	return ((search->second));
+	auto comp = _components.begin();
+	while (comp != _components.end() && (*comp)->getType() != type)
+		comp += 1;
+	if (comp == _components.end())
+		throw("No such Component");
+	return (*comp);
 }
 
-void ecs::Entity::updateComponent(ecs::compType type, ecs::Component &updated)
+
+void ecs::Entity::addComponent(ecs::Component *comp)
 {
-	_components[type] = &updated;
+	_components.emplace_back(comp);
 }
 
-void ecs::Entity::addComponent(ecs::compType type, ecs::Component &cmp)
+void ecs::Entity::updateComponent(ecs::compType type, ecs::Component *updated)
 {
-	_components[type] = &cmp;
+	auto comp = _components.begin();
+	while (comp != _components.end() && (*comp)->getType() != type)
+		comp += 1;
+	if (comp != _components.end())
+		*comp = updated;
 }
 
 void ecs::Entity::removeComponent(ecs::compType type)
 {
-	auto search = _components.find(type);
-	if (search != _components.end()) {
-		_components.erase(search);
-	} else {
-		std::cout << "Component not found, cannot be deleted" << std::endl;
-	}
+	auto comp = _components.begin();
+	while (comp != _components.end() && (*comp)->getType() != type)
+		comp += 1;
+	if (comp == _components.end())
+		throw("No such Component");
+	else
+		_components.erase(comp);
 }

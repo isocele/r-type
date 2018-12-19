@@ -23,6 +23,7 @@ namespace ecs {
 		Component();
 		Component(ecs::compType type);
 		virtual ~Component() = default;
+		ecs::compType getType();
 
 	protected:
 		ecs::compType _type;

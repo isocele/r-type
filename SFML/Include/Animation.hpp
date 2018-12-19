@@ -13,12 +13,19 @@
 
 class Animation {
 public:
-	Animation(SpriteCreator &creator, int spriteNb, sf::Vector2f pos, sf::Vector2f pad);
+	Animation(SpriteCreator &creator, spriteType type);
 	~Animation();
-  void createAnim();
-	sf::Sprite getAnimAt(int pos);
+	sf::Sprite getAnim();
+	void createAnim(sf::Vector2f posRect, sf::Vector2f pad, sf::Vector2f scale, SpriteCreator &creator);
+	bool getHaveAnim();
 private:
 	std::vector<sf::Sprite> anim;
+	spriteType type;
+	sf::Time timer = sf::milliseconds(100);
+	sf::Clock clock;
+	int animNb = 0;
+	int spriteNb = 0;
+	bool haveAnim = true;
 };
 
 #endif /* ANIMATION_HPP */

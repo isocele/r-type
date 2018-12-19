@@ -25,6 +25,8 @@ enum spriteType {
 	TITLE,
 	READY,
 	CROSS,
+	GAMEOVER,
+	SHIP_ANIM,
 
 	SPRITE_NB,
 };

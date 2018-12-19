@@ -24,7 +24,7 @@ void Graphics::close()
 	window.close();
 }
 
-int Graphics::Launcher(SpriteCreator &creator, std::array<float, 250> &arr, int &size) {
+int Graphics::Launcher(SpriteCreator &creator, std::array<float, 350> &arr, int &size) {
 	int r = 0;
 
 	r = menu.MenuManager(window, creator, arr, size);
@@ -35,13 +35,14 @@ int Graphics::Launcher(SpriteCreator &creator, std::array<float, 250> &arr, int 
 	return r;
 }
 
-int Graphics::startDisplay(std::array<float, 250> &arr, int &size)
+int Graphics::startDisplay(std::array<float, 350> &arr, int &size)
 {
 	// menu.setLauncherMenu(true);
 	if (!window.isOpen())
 		return 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		window.close();
+
 	while (window.pollEvent(event)) {
 		if (event.type == sf::Event::Closed)
               window.close();
@@ -85,15 +86,25 @@ void Graphics::removeSomeComp(std::vector<std::vector<float>> compSent)
 				exist = true;
 		}
 		if (!exist) {
-			if (components[i].getAnimState())
-				components[i].playAnimation();
-			else if (!components[i].getPlayAnim()) {
+			// if (components[i].getAnimState())
+			// 	components[i].playAnimation();
+			// else if (!components[i].getPlayAnim()) {
 				components.erase(components.begin() + i);
 				i--;
-			}
+			// }
 		}
 		exist = false;
 	}
+}
+
+void Graphics::printgameover()
+{
+	if (!gameoverinit) {
+		gameoverinit = true;
+		gameover = creator.createSprite(GAMEOVER);
+	}
+	gameover.setPosition(700.f, 400.f);
+	window.draw(gameover);
 }
 
 void Graphics::getComponents(std::vector<std::vector<float>> compSent)
@@ -111,17 +122,19 @@ void Graphics::getComponents(std::vector<std::vector<float>> compSent)
 	}
 }
 
-bool Graphics::display(std::vector<std::vector<float>> compSent, Controls &controls)
+bool Graphics::display(std::vector<std::vector<float>> compSent, Controls &controls, Sound &sound, bool gameover)
 {
 	if (window.isOpen()) {
 		window.clear();
 		background.display(window);
 		getComponents(compSent);
-		controls.checkControls();
+		controls.checkControls(sound);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			window.close();
 			return false;
 		}
+		if (gameover)
+			printgameover();
 		for (auto& comp : components)
 			window.draw(comp.getSprite());
 		window.display();

@@ -4,7 +4,7 @@
 std::atomic<bool> quit(false);    // signal flag
 
 void UDPClient::send_header(int message) {
-	std::cout << "envois [ " << message << " ]" << std::endl;
+	// std::cout << "envois [ " << message << " ]" << std::endl;
 	socket_.send_to(boost::asio::buffer(&message, sizeof(message)), endpoint_);
 }
 
@@ -16,9 +16,8 @@ void UDPClient::receive_header() {
 }
 
 void UDPClient::handle_header(const boost::system::error_code &ec, size_t bytes) {
-	std::cout << "handle header" << std::endl;
+	(void)bytes;
 	if (!ec && header != 2) {
-		std::cout << "reçus [ " << header << " ] size(" << bytes << " bytes)" << std::endl;
 		socket_.async_receive_from(boost::asio::buffer(&floatcom, sizeof(floatcom)), endpoint_,
 					   boost::bind(&UDPClient::handle_body, this,
 						       boost::asio::placeholders::error,
@@ -30,8 +29,8 @@ void UDPClient::handle_header(const boost::system::error_code &ec, size_t bytes)
 }
 
 void UDPClient::handle_body(const boost::system::error_code &ec, size_t bytes) {
+	(void)bytes;
 	if (!ec) {
-		std::cout << "reçus size(" << bytes << " bytes)" << std::endl;
 		analyse_header();
 		receive_header();
 	} else {
@@ -52,9 +51,6 @@ void UDPClient::analyse_header()
 	else if (header == 9) {
 		std::cout << "End of game" << std::endl;
 		exit(0);
-	}
-	else if (header == 2) {
-		components = components;
 	}
 }
 
@@ -89,11 +85,11 @@ void UDPClient::getComponents()
 	std::vector<float> tmp;
 
 	for (int i = 0; i < floatcom.size; i++) {
-		std::cout << floatcom._arr[i] << " ";
+		// std::cout << floatcom._arr[i] << " ";
 		tmp.push_back(floatcom._arr[i]);
 		nb++;
 		if (nb == 5) {
-			std::cout << std::endl;
+			// std::cout << std::endl;
 			components.push_back(tmp);
 			tmp.clear();
 			nb = 0;
@@ -120,7 +116,6 @@ void UDPClient::handleQuit()
 void UDPClient::mainLoop()
 {
 	sound.launchTrack(WELCOME);
-	sound.launchTrack(BOMB);
 	while (open && open != 3 && header != 1) {
 		handleQuit();
 		open = game.startDisplay(floatcom._arr, floatcom.size);
@@ -131,9 +126,11 @@ void UDPClient::mainLoop()
 	}
 	sound.stopTrack(WELCOME);
 	sound.launchTrack(PKM);
-	while (isConnected && open) {
+	while (open) {
 		getComponents();
-		open = game.display(components, controls);
+		if ((int)header == idClient + 2 || gameover == true)
+			gameover = true;
+		open = game.display(components, controls, sound, gameover);
 		handleQuit();
 		components.clear();
 		sendControls();

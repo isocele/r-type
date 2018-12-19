@@ -8,13 +8,20 @@
 #include "PositionComponent.hpp"
 
 ecs::Position::Position()
-	: Component(ecs::POSITION), _angle(0), _speed(10), _auto(false)
+	: Component(ecs::POSITION), _angle(0), _speed(1), _auto(false)
 {
 //	std::cout << "Position Component added" << std::endl;
 }
 
 ecs::Position::Position(int x, int y, int angle)
-	: Component(ecs::POSITION), _angle(angle), _speed(10), _auto(false)
+	: Component(ecs::POSITION), _angle(angle), _speed(1), _auto(false)
+{
+	_pos.x = x;
+	_pos.y = y;
+}
+
+ecs::Position::Position(int x, int y, int angle, int speed, bool val)
+	: Component(ecs::POSITION), _angle(angle), _speed(speed), _auto(val)
 {
 	_pos.x = x;
 	_pos.y = y;
@@ -35,6 +42,11 @@ int ecs::Position::getY()
 	return(_pos.y);
 }
 
+void ecs::Position::setX(int x)
+{
+	_pos.x = x;
+}
+
 void ecs::Position::setAngle(int angle)
 {
 	_angle = angle;
@@ -42,14 +54,12 @@ void ecs::Position::setAngle(int angle)
 
 void ecs::Position::setPos(rtype::vector2 pos)
 {
-	std::cout << "ok" << '\n';
 	_pos.x = pos.x;
 	_pos.y = pos.y;
 }
 
 void ecs::Position::setPos(int valX, int valY)
 {
-	std::cout << "oki" << '\n';
 	_pos.x = valX;
 	_pos.y = valY;
 }

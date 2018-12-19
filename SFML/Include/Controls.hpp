@@ -9,13 +9,14 @@
 #define CONTROLS_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Sound.hpp"
 
 class Controls  {
 public:
 	Controls ();
 	~Controls ();
   void reset();
-  void checkControls();
+  void checkControls(Sound &sound);
   bool getSpace();
   bool getUp();
   bool getDown();

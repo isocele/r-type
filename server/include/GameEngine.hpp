@@ -29,18 +29,14 @@ namespace ecs {
 		Engine();
 		~Engine() = default;
 
-		//the contents of update are game-specific
-		//and defined in implementUpdate();
-		//the rest of the functions have nothing to
-		//do with the game itself
-		void update();
-
 		//Entity management
 		Entity &newEntity();
 		Entity &newEntity(entityType);
 		Entity &getEntity(int id);
 		Entity &addEntity(Entity &ent);
 		bool killEntity(int id);
+		bool killEntity(Entity &ent);
+		std::vector<ecs::Entity> &getEntities();
 
 		//System Management
 		System &getSystem(ecs::sysType);
@@ -50,24 +46,16 @@ namespace ecs {
 
 		int genID();
 
-	//private:
-
-		std::vector<ecs::System> _systems;
-		std::vector<ecs::Entity> _entities;
-		std::vector<ecs::Entity *>_players;
-
 	private:
 
+		std::vector<ecs::Entity> _entities;
+		std::vector<ecs::System> _systems;
 		int _idCounter;
 		unsigned int _sysCounter;
 		bool _firstUpdate;
 
 		//no exterior class should be able to kill systems ?
 		bool killSystem(int id);
-
-		//this is the game-dependent function
-		void implementUpdate();
-
 
 	};
 

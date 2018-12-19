@@ -14,14 +14,15 @@ int main(int ac, char** av) {
 			return 84;
 		}
 		boost::asio::io_service io_service;
-		std::vector<Network::Server_ptr> list;
+		//std::vector<Network::Server_ptr> list;
+		Network::Server server(io_service, std::atoi(av[1]));
+		std::thread run_thread([&io_service]() { io_service.run();});
 
-		// for (int i = 1; i < ac; i += 1) {
-			// std::cout << "oui" << '\n';
-			Network::Server new_server(io_service, std::atoi(av[1]));
-			std::thread run_thread([&io_service]() { io_service.run();});
-			// list.push_back(new_server);
-		// }
+		while (true) {
+			if (server.isRunning())
+				server.updateEngine();
+			std::this_thread::sleep_for(std::chrono::microseconds(500));
+		}
 		run_thread.join();
 	}
 	catch (std::exception& e) {

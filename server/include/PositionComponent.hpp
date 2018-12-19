@@ -19,6 +19,7 @@ namespace ecs {
 
 		Position();
 		Position(int x, int y, int angle);
+		Position(int x, int y, int angle, int speed, bool val);
 
 		rtype::vector2 &getPos();
 		int getX();
@@ -28,6 +29,7 @@ namespace ecs {
 		bool isAutonomous();
 
 		void setPos(int x, int y);
+		void setX(int x);
 		void setPos(rtype::vector2 pos);
 		void setAngle(int angle);
 		void setSpeed(float speed);

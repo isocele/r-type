@@ -14,7 +14,6 @@ SpriteCreator::SpriteCreator()
 		std::unique_ptr<sf::Texture> texturePtr(new sf::Texture);
 		factory.push_back(std::move(texturePtr));
 	}
-	// createCustomTexture("SFML/assets/ships.gif", SHIP, sf::IntRect(0, 20, 0, 10));
 	createTexture("SFML/assets/ship1.png", SHIP1);
 	createTexture("SFML/assets/ship2.png", SHIP2);
 	createTexture("SFML/assets/ship3.png", SHIP3);
@@ -30,6 +29,8 @@ SpriteCreator::SpriteCreator()
 	createTexture("SFML/assets/Title.png", TITLE);
 	createTexture("SFML/assets/readyOK.png", READY);
 	createTexture("SFML/assets/cross.png", CROSS);
+	createTexture("SFML/assets/gameover.png", GAMEOVER);
+	createTexture("SFML/assets/ships.gif", SHIP_ANIM);
 }
 
 SpriteCreator::~SpriteCreator()

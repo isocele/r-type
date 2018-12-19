@@ -39,7 +39,7 @@ class Menu {
 public:
   Menu();
   ~Menu();
-	int MenuManager(sf::RenderWindow &win, SpriteCreator &creator, std::array<float, 250> &arr, int &size);
+	int MenuManager(sf::RenderWindow &win, SpriteCreator &creator, std::array<float, 350> &arr, int &size);
   void setLobbyMenu(bool state);
   void setLauncherMenu(bool state);
   int drawLauncher(sf::RenderWindow &win);
@@ -72,7 +72,7 @@ private:
   bool firsttime = false;
   std::vector<bool> _Player;
   std::vector<bool> _Ready;
-  std::array<float, 250> _Floatcom;
+  std::array<float, 350> _Floatcom;
 };
 
 #endif /* MENU_HANDLE */
